@@ -156,7 +156,12 @@ No known bugs at this time.
 ## Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
-
+Olasunkanmi Daniel Temitayo - [Github](https://github.com/oladanielT) / [Twitter](https://twitter.com/DANIELOLAS39041)
 Second part of Airbnb: Joann Vuong
 ## License
 Public Domain. No copy write protection. 
+
+Third part of Airbnb, Resful API, Flask Implementation.
+======================================================
+
+
