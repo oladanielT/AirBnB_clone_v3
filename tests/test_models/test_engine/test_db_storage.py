@@ -82,7 +82,54 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_new(self):
         """test that new adds an object to the database"""
+        new_obj = {'name': 'Ola'}
+        new_state = State(**new_obj)
+        models.storage.new(new_state)
+        session = models.storage.DBStorage.__session
+        id = new_state.id
+        retrieved_state = session.query(State).filter_by(id=id).first()
+        self.assertEqual(retrieved_state.id, new_state.id)
+        self.asserEqual(retrieved_state.name, new_state.name)
+        self.assertIsNotNone(retrieved_state)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+        state_obj = {'name': 'London'}
+        new_state = State(**state_obj)
+        models.storage.new(new_state)
+        models.storage.save()
+        session = models.storage.DBStorage.__session
+        id = new_state.id
+        retrieved_state = session.query(State).filter_by(id=id).first()
+        self.assertEqual(retrieved_state.id, new_state.id)
+        self.assertEqual(retrieved_state.name, new_state.name)
+        self.assertIsNotNone(retrieved_state)
+
+    @unittest.skipIf(models.storage != 'db', "not testing db storage")
+    def test_get(self):
+        storage = models.storage
+        new_obj = {'name': 'Lagos'}
+        new_state = State(**new_obj)
+        storage.save()
+        retrieved_state = storage.get(State, new_state.id)
+        self.assertEqual(retrieved_state, new_state)
+        fake_id = storage.get(State, 'fake')
+        self.assertEqual(fake_id, None)
+
+    @unittest.skipIf(models.storage != 'db', "not testing the db database")
+    def count(self):
+        storage = models.storage
+        storage.reload()
+        new_obj = {'name': 'canada'}
+        new_state = State(**new_obj)
+        storage.new(new_state)
+        storage.save()
+        city_obj = {'name': 'corn', 'state_id': new_state.id}
+        new_city = City(**city_obj)
+        storage.new(new_city)
+        storage.save()
+        retrieved_len = storage.count(state.name)
+        self.assertEqual(retrieved_len, len(storage.all(state.name)))
+        retrieved_all = storage.count()
+        self.assertEqual(retrieved_all, len(storage.all()))
