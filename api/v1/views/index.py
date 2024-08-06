@@ -11,4 +11,7 @@ def view_status():
     """
     route to status
     """
-    return jsonify({"status": "ok"})
+    response = {
+        "status": "ok"
+    }
+    return jsonify(response)
