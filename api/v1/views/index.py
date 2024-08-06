@@ -3,15 +3,21 @@
 index module for routing
 """
 from api.v1.views import api_views
-from flask import Flask
+from flask import jsonify, Flask
 
 
-app = Flask(__name__)
+@app.teardown_appcontext
+def teardown(exception):
+    """
+    manage breakage
+    """
+    storage.close()
 
 
-app.route('/status', strict_slashes=False)
+@api_views.route('/status', strict_slashes=False)
 def status():
     """
     route to status
     """
-    return "status: ok"
+    response = {"status": "ok"}
+    return jsonify(response)
