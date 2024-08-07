@@ -13,7 +13,7 @@ def view_status():
     route to status
     """
     response = {
-        "status": "ok"
+        "status": "OK"
     }
     return jsonify(response)
 
