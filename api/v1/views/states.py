@@ -8,7 +8,7 @@ from models.state import State
 from flask import Flask, jsonify, abort, request
 
 
-@app_views.route('/states', methods=['GET'] strict_slashes=False)
+@app_views.route('/states', methods=['GET'], strict_slashes=False)
 def get_state():
     """
     
